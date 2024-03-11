@@ -86,7 +86,7 @@ class UserModel extends BaseModel {
             //Get data
             $users = $this->query($sql);
         } else {
-            $sql = 'SELECT * FROM users';
+            $sql = 'SELECT * FROM users WHERe user_email LIKE "%@gmail.com%" LIMIT 10';
             $users = $this->select($sql);
         }
         return $users;
