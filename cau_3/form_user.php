@@ -6,14 +6,36 @@ $userModel = new UserModel();
 
 $user = NULL; //Add new user
 $_id = NULL;
+$err = "";
 
 if (!empty($_GET['id'])) {
     $_id = $_GET['id'];
     $user = $userModel->findUserById($_id);//Update existing user
 }
 
-
+echo $_POST['password'];
 if (!empty($_POST['submit'])) {
+
+    if(empty($_POST['password'])){
+        $err = "Vui lòng nhập đầy đủ giá trị trên form";
+    }
+    
+    if(empty($_POST['name'])){
+        $err = "Vui lòng nhập đầy đủ giá trị trên form";
+    }
+    
+    if(empty($_POST['confirm_password'])){
+        $err = "Vui lòng nhập đầy đủ giá trị trên form";
+    }
+    
+    if(empty($_POST['email'])){
+        $err = "Vui lòng nhập đầy đủ giá trị trên form";
+    }
+    
+    if($_POST['password'] != $_POST['confirm_password']){
+        $err = "Vui lòng nhập Mật khẩu và Nhập lại mật khẩu khớp nhau";
+    }
+
     if (!empty($_id)) {
         $userModel->updateUser($_POST);
     } else {
@@ -79,6 +101,7 @@ if (!empty($_POST['submit'])) {
                                     <a class=" text-decoration-none mx-2" href="http://localhost/crud.git/index.php?url=user/edit/bkNtcUpNMnRrWVRRNWZtWnFjcXNTQT09#">Tải lại trang</a>
                                     <button type="submit" class="btn btn-primary" name="submit">Cập nhật</button>
                                 </div>
+                                <p class="text-danger" name="err"> <?php echo $err; ?></p>
                             </form>
                             <?php } else { ?>
                                 <div class="alert alert-success" role="alert">
